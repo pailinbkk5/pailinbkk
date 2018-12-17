@@ -1,37 +1,42 @@
-## Welcome to GitHub Pages
+<?php 
+	$page_title = 'User Authentication System';
+	include_once 'partials/headers.php';
 
-You can use the [editor on GitHub](https://github.com/pailinbkk5/pailinbkk/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+ 
+ 	include_once 'resource/Database.php' ;
+ 	//include_once 'resource/session.php' ; // to start the session. (dont need it ,everywhere as $_SESSION is a global variable so , its needed in the login file only where the session has to start)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+?>
 
-### Markdown
+    <div class="container">
+    	<div class="flag" >
+        	 <h1  >User Authentication System</h1><hr><!-- NOTE : session is deleted each time we close the browser, or if 																			you login from the incognito mode -->
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+        	 </br></br></br></br></br></br></br></br></br></br> <!-- add an image here -->
+        	 
+        	 <p class="lead">							<!-- isset($_COOKIE['authenticationSystem']) -->
+        	 <!--BUT NOTE: in this case when we logout the session is distroyed (in both the case either he has choosed the remember me funcionality or not -> see the LOGOUT.PHP file ) 
+        	 THE ERROR IS BECAUSE , even after hte logout is done ,the cookie is set,so one of the condition becomes true, and now it want to display the username, which is no longer exists as the session is destroyed so for that we have to set the session when the cookie is not deleted,OR UNSET  -->
 
-```markdown
-Syntax highlighted code block
+			     <?php if( isset($_SESSION['username']) ) : # NO need to worry about the cookie setup on here as the cookie set is checked and handled in header only , so if the cookie is set it starts the session there only ,so no need of any more condition in here ;) ?>
 
-# Header 1
-## Header 2
-### Header 3
+				      <p class="lead">you are loged in as {<?php echo $_SESSION['username'] ?>} see your profile : 
+				      	<a href="profile.php">profile</a>
+				      	</br>
+				      	<a href="logout.php">logout</a> </p>
+			     <?php else: ?>
+			     	<p class="lead">You are not currently signed in <a href="login.php">login</a> Not a member yet? <a href="signup.php">signup</a></p>
+			     	<p><?php # echo !extension_loaded('openssl')?"not loaded":"loaded"; ?></p>
+              <!-- now we dont need the logot file, i can call the logout function from here -->
+			     <?php endif ?>
 
-- Bulleted
-- List
+			<p class="lead">Please give us <a href="feedback.php">feed-back</a>.</p>
 
-1. Numbered
-2. List
+			<a href="test.php">test</a>
+			</p>
+     	</div>
 
-**Bold** and _Italic_ and `Code` text
+    </div><!-- /.container -->
+    
+<?php include_once 'partials/footers.php'; ?>
 
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/pailinbkk5/pailinbkk/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
